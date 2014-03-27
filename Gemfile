@@ -24,6 +24,8 @@ gem 'coffee-rails', '~> 4.0.0'
 #Use devise for user authentication
 #gem 'devise'
 
+gem 'bootstrap-sass', '~> 3.1.1'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
