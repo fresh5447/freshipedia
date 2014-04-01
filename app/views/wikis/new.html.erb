@@ -1,5 +1,17 @@
-<h1>New wiki</h1>
+<h1>New Wiki</h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="span6">
+    <p>Go ahead, make a Wiki!:</p>
+    <ul>
+      <li>Make sure content is appropriate.</li>
+      <li>Interesting words..</li>
+    </ul>
+  </div>
+  <div class="span6">
 
-<%= link_to 'Back', wikis_path %>
+      <%= render 'form' %>
+
+      <%= link_to 'Back', wikis_path %>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+<h1><%= @wiki.name %></h1>
 
 <p id="notice"><%= notice %></p>
 
@@ -7,12 +8,12 @@
 </p>
 
 <p>
-  <h1><%= markdown @wiki.name %></h1>
+  <h1><%= @wiki.name %></h1>
   <%= @wiki.name %>
 </p>
 
 <p>
-  <p><%= markdown @wiki.body %></p>
+  <p><%= @wiki.body %></p>
   <%= @wiki.body %>
 </p>
 
