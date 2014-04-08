@@ -4,7 +4,8 @@ class WikisController < ApplicationController
   # GET /wikis
   # GET /wikis.json
   def index
-    @wikis = Wiki.all
+    @wiki = Wiki.all
+    authorize @wiki 
   end
 
   # GET /wikis/1
@@ -15,6 +16,7 @@ class WikisController < ApplicationController
   # GET /wikis/new
   def new
     @wiki = Wiki.new
+    authorize @wiki
   end
 
   # GET /wikis/1/edit
@@ -26,6 +28,8 @@ class WikisController < ApplicationController
   def create
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
+
+    authorize @wiki if @wiki.save #pundit addition
 
     respond_to do |format|
       if @wiki.save
@@ -56,6 +60,7 @@ class WikisController < ApplicationController
   # DELETE /wikis/1.json
   def destroy
     @wiki.destroy
+    authorize @wiki
     respond_to do |format|
       format.html { redirect_to wikis_url }
       format.json { head :no_content }
@@ -64,8 +69,8 @@ class WikisController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_wiki
-      @wiki = Wiki.find(params[:id])
+    def set_wiki      
+      @wiki = Wiki.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

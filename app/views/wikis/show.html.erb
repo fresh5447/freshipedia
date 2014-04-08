@@ -1,20 +1,20 @@
-<h1><%= @wiki.name %></h1>
+
 
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User:</strong>
-  <%= @wiki.user %>
+  <strong><%= @wiki.user %></strong>
+  
 </p>
 
 <p>
   <h1><%= @wiki.name %></h1>
-  <%= @wiki.name %>
+  
 </p>
 
 <p>
   <p><%= @wiki.body %></p>
-  <%= @wiki.body %>
+  
 </p>
 
 <%= link_to 'Edit', edit_wiki_path(@wiki) %> |

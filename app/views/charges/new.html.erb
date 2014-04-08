@@ -1,0 +1,15 @@
+<%= form_tag charges_path do %>
+
+  / The form doesn't pass the amount to the create action,
+  / so we have to pass it manually.
+  <%= hidden_field_tag :amount, @stripe_btn_hash[:data][:amount] %>
+
+  <h4>Click the button!</h4>
+  <script src="https://checkout.stripe.com/checkout.js"  
+    class='stripe-button' 
+    data-key ="<%= Rails.configuration.stripe[:publishable_key]%>" 
+      data-description="BigMoney Membership - <%= current_user.name %>" 
+      data-amount= "900"  >
+  </script>
+
+  <% end %>

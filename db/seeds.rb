@@ -12,7 +12,8 @@ wikis = []
 15.times do
   wikis << Wiki.create(
     name: Faker::Lorem.words(rand(1..10)).join(" "), 
-    body: Faker::Lorem.paragraph(rand(1..4))
+    body: Faker::Lorem.paragraph(rand(1..4)),
+    user: u
   )
 
 end

@@ -1,8 +1,8 @@
-<h1>My wikis (Index) (found in index.html.erb)</h1>
+<h1>My wikis</h1>
 
 <table class="table table-bordered">
   <thead>
-    <tr class="warning">
+    <tr class="info">
       <th>User</th>
       <th>Name</th>
       <th>Body</th>
@@ -11,15 +11,15 @@
   </thead>
 
   <tbody>
-    <% @wikis.each do |wiki| %>
-      <tr class="success">
-        <td><%= wiki.user %></td>
+    <% @wiki.each do |wiki| %>
+      <tr class="active">
+        <td><%= wiki.user.name if wiki.user %></td>
         <td><%= wiki.name %></td>
         <td><%= wiki.body %></td>
         <td><%= link_to 'Show', wiki %> | 
         <%= link_to 'Edit', edit_wiki_path(wiki) %> |
         <%= link_to 'Destroy', wiki, method: :delete, data: { confirm: 'Are you sure?' } %> | 
-        <%= link_to 'Add Collaborators', new_wiki_collaborators_path(wiki) %>
+        <%= link_to 'Add Collaborators', new_wiki_collaborator_path(wiki) %>
       </td>
       </tr>
     <% end %>
@@ -27,7 +27,7 @@
 </table>
 
 <br>
-<% if current_user %>
+<% if policy(Wiki.new).create? %> <%#added policy instead of if user %>
   <%= link_to 'New', new_wiki_path %>
 <% end %>
 

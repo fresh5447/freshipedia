@@ -16,6 +16,9 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
+# friendly.id for friendly URLS
+gem 'friendly_id', '~> 5.0.0'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
 
@@ -30,6 +33,7 @@ gem 'devise'
 gem 'redcarpet'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'stripe'
+gem 'pundit'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

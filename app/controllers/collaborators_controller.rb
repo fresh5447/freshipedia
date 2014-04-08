@@ -1,13 +1,14 @@
 class CollaboratorsController < ApplicationController
   def new
     @users = User.all
+    @users.delete(current_user)
     @collaborator = Collaborator.new
     @wiki = Wiki.find(params[:wiki_id])
   end
 
   def create
     @wiki = Wiki.find(params[:wiki_id])
-    @collaborator = @wiki.collaborators.build(params[:collaborator])
+    @collaborator = @wiki.collaborators.build(collaborator_params)
     
     if @collaborator.save
       flash[:notice] = "Successfully added collaborator."
@@ -29,4 +30,11 @@ class CollaboratorsController < ApplicationController
       flash[:notice] = "Collaborator could not be removed."
     end
   end
+
+  private 
+
+  def collaborator_params
+      params.require(:collaborator).permit(:user_id)
+  end
+
 end
