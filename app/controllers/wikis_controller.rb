@@ -4,13 +4,14 @@ class WikisController < ApplicationController
   # GET /wikis
   # GET /wikis.json
   def index
-    @wiki = Wiki.all
+    @wiki = Wiki.visible_to(current_user)
     authorize @wiki 
   end
 
   # GET /wikis/1
   # GET /wikis/1.json
   def show
+   # @wiki = Wiki.find(params[:id])
   end
 
   # GET /wikis/new
@@ -21,6 +22,9 @@ class WikisController < ApplicationController
 
   # GET /wikis/1/edit
   def edit
+    #@wiki = Wiki.find(params[:id])
+    #@users = User.all
+   # authorize! :edit, @wiki, message: "You need to own the wiki to do edit it."
   end
 
   # POST /wikis
@@ -29,8 +33,8 @@ class WikisController < ApplicationController
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
 
-    authorize @wiki if @wiki.save #pundit addition
-
+    authorize @wiki 
+    
     respond_to do |format|
       if @wiki.save
         format.html { redirect_to @wiki, notice: 'Wiki was successfully created.' }
@@ -62,7 +66,7 @@ class WikisController < ApplicationController
     @wiki.destroy
     authorize @wiki
     respond_to do |format|
-      format.html { redirect_to wikis_url }
+      format.html { redirect_to wikis_path }
       format.json { head :no_content }
     end
   end
@@ -75,6 +79,6 @@ class WikisController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def wiki_params
-      params.require(:wiki).permit(:user_id, :name, :body)
+      params.require(:wiki).permit(:user_id, :name, :body, :private)
     end
 end

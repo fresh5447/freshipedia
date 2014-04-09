@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
+
+  after_create :make_free
   #extend FriendlyId
   #friendly_id :name, use: :slugged
 
@@ -10,13 +12,16 @@ class User < ActiveRecord::Base
      #   slug.blank? || name_changed?
     # end
     # 
-
-
-
-  ROLES = %w[member moderator admin]    #is this right?
 def role?(base_role)
-  role.nil? ? false : ROLES.index(base_role.to_s) <= ROLES.index(role)
+  role == base_role.to_s
 end 
+
+def premium_or_admin?
+end
+
+def make_free
+  self.update_attribute(:role, "free")
+end
 
  # User.create! name: "Joe Schmoe"
 

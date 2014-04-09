@@ -4,9 +4,8 @@ class Wiki < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged #(rails g migration add_slug_to_wikis slug:string)
 
-      def should_generate_new_friendly_id?
-        slug.blank? || name_changed?
-      end
+  scope :visible_to, ->(user) { user && user.role?("premium") ? scoped : where(private: false) }
+
 end
 
 # @wiki = Wiki.create(:name => "this is a wiki!")

@@ -18,7 +18,7 @@ def create
     currency: 'usd'
   )
 
-  #current_user.update_attribute("premium", true)
+  current_user.update_attribute(:role, "premium")
 
   flash[:success] = "Thanks for all the money, #{current_user.first_name}! Feel free to pay me again."
   redirect_to user_path(current_user) # or wherever

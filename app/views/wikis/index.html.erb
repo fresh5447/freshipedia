@@ -1,4 +1,15 @@
 <h1>My wikis</h1>
+<div class="row">
+<% if policy(Wiki.new).create? %> <%#added policy instead of if user %>
+  <%= link_to 'New', new_wiki_path, class: 'btn btn-primary btn-large' %>
+<% end %>
+
+<% if current_user.role?("free") %>
+  <h2><%= link_to "Upgrade Account", new_charge_path, class: 'btn btn-primary btn-large' %></h2>
+  </div>
+<% end %>
+<%# If current_user.role(free)
+show%>
 
 <table class="table table-bordered">
   <thead>
@@ -27,9 +38,7 @@
 </table>
 
 <br>
-<% if policy(Wiki.new).create? %> <%#added policy instead of if user %>
-  <%= link_to 'New', new_wiki_path %>
-<% end %>
+
 
 <%#[FIXME]= link_to 'Profile', user_profile_path %> 
-<%# [FIXME]= link_to 'Sign out', user_signout_path %>
+
