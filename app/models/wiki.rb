@@ -6,6 +6,8 @@ class Wiki < ActiveRecord::Base
 
   scope :visible_to, ->(user) { user && user.role?("premium") ? scoped : where(private: false) }
 
+
+ 
 end
 
 # @wiki = Wiki.create(:name => "this is a wiki!")

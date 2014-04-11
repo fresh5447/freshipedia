@@ -4,8 +4,7 @@ class WikisController < ApplicationController
   # GET /wikis
   # GET /wikis.json
   def index
-    @wiki = Wiki.visible_to(current_user)
-    authorize @wiki 
+    @wikis = policy_scope(Wiki)
   end
 
   # GET /wikis/1
@@ -22,9 +21,8 @@ class WikisController < ApplicationController
 
   # GET /wikis/1/edit
   def edit
-    #@wiki = Wiki.find(params[:id])
-    #@users = User.all
-   # authorize! :edit, @wiki, message: "You need to own the wiki to do edit it."
+    @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   # POST /wikis
@@ -49,6 +47,9 @@ class WikisController < ApplicationController
   # PATCH/PUT /wikis/1
   # PATCH/PUT /wikis/1.json
   def update
+    #@wiki = Wiki.find(params[:id])   PUNDIT 51/52/53
+    #authorize @wiki    
+    #if @wiki.update_attributes(params.require(:wiki).permit(:name, :body))
     respond_to do |format|
       if @wiki.update(wiki_params)
         format.html { redirect_to @wiki, notice: 'Wiki was successfully updated.' }

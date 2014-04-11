@@ -22,15 +22,21 @@ show%>
   </thead>
 
   <tbody>
-    <% @wiki.each do |wiki| %>
+    <% @wikis.each do |wiki| %>
       <tr class="active">
         <td><%= wiki.user.name if wiki.user %></td>
         <td><%= wiki.name %></td>
         <td><%= wiki.body %></td>
         <td><%= link_to 'Show', wiki %> | 
-        <%= link_to 'Edit', edit_wiki_path(wiki) %> |
-        <%= link_to 'Destroy', wiki, method: :delete, data: { confirm: 'Are you sure?' } %> | 
-        <%= link_to 'Add Collaborators', new_wiki_collaborator_path(wiki) %>
+        <% if policy(wiki).edit? %>
+         <%= link_to 'Edit', edit_wiki_path(wiki) %>
+        <% end %> |
+        <% if policy(wiki).destroy? %>
+          <%= link_to 'Destroy', wiki, method: :delete, data: { confirm: 'Are you sure?' } %> | 
+        <% end %>
+        <% if current_user.role?("premium") %>
+          <%= link_to 'Add Collaborators', new_wiki_collaborator_path(wiki) %>
+        <% end %>
       </td>
       </tr>
     <% end %>

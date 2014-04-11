@@ -2,9 +2,10 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable #:confirmable
 
   after_create :make_free
+  
   #extend FriendlyId
   #friendly_id :name, use: :slugged
 
@@ -16,12 +17,18 @@ def role?(base_role)
   role == base_role.to_s
 end 
 
-def premium_or_admin?
+def admin?
+  role?(:admin)
 end
 
 def make_free
   self.update_attribute(:role, "free")
 end
+
+def premium_or_admin?
+end
+
+
 
  # User.create! name: "Joe Schmoe"
 
