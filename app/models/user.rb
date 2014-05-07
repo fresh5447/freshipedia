@@ -21,6 +21,10 @@ def admin?
   role?(:admin)
 end
 
+def free?
+  role?(:free)
+end
+
 def make_free
   self.update_attribute(:role, "free")
 end

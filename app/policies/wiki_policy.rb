@@ -1,35 +1,44 @@
-class WikiPolicy < Struct.new(:user, :wiki)
+class WikiPolicy < ApplicationPolicy
+  
   class Scope < Struct.new(:user, :scope)
     def resolve
-      if user.role?(:admin)
+      if user.admin?
         scope.all
-      elsif user.role?(:premium)
-        wiki.user == user || wiki.collaborators.map {|collab| collab.user}.include?(user)
       else
-        scope.where(:private => false)
+        scope.where(user: user)
       end
     end
   end
-
+ 
+  def index?
+    if user.role?(:admin)
+      true
+    elsif user.role?(:premium)
+      !record.private? && (record.user == user || record.collaborators.map{|collab| collab.user}.include?(user)) 
+    else
+      false
+    end
+  end
+  
+ 
   def update?
-   # Rails.logger.info ">>> #{user.inspect}"
-    Rails.logger.info ">>>>> #{wiki.inspect}"
-    user.admin? or not wiki.private?
+    index?
   end
-
+ 
   def edit?
-    update?
+    index?
   end
-
+ 
   def create?
     user.present?
   end
-
+ 
   def show?
+    record.private? ? update? : true
   end
-
+ 
   def destroy?
     update?
   end
-
+ 
 end
